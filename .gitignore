@@ -4,7 +4,7 @@
 *~
 .DS_Store
 __pycache__/
-local_settings.py
+Betting/Betting/settings.py
 db.sqlite3
 db.sqlite3-journal
 env

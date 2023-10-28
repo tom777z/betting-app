@@ -20,10 +20,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-gy!9&ahcaz&9+v8w@mh3ptb&h)5#eq5h76gamu+-oj_s9t4cc7'
+SECRET_KEY = 'adKKAxx^ssa8wqj21hqwewv8w@mh3ptb&h)5#eq5h76gamu+-oj_s9t4cc7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['*']
 
@@ -76,7 +76,7 @@ WSGI_APPLICATION = 'Betting.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': 'betting_app',
+        'NAME': 'betting_app1',
         'USER': 'postgres',
         'PASSWORD': 'postgres',
         'HOST': 'localhost',
