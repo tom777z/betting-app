@@ -3,6 +3,7 @@
 {%block title%} New Game {% endblock%}
 
 {% block content %}
+
     <form class="form" method="POST" enctype="multipart/form-data" >
         {% csrf_token %} 
         {{form.as_p}}

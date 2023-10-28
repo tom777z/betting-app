@@ -15,10 +15,10 @@
             </div>
         </br>
             <div>
-                <h5> First name: {{ player.firstname }} </h5>
+                <h5> First name: {{ player.firstname | default_if_none:"" }} </h5>
             </div>
             <div>
-                <h5> Last name: {{ player.lastname }} </h5>
+                <h5> Last name: {{ player.lastname | default_if_none:"" }} </h5>
             </div>
             <div>
                 <h5> Points: <span style="color: #dc3545"> {{ points | default_if_none:"0"  }}</span></h5>

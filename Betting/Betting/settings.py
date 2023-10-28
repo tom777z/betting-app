@@ -29,7 +29,6 @@ ALLOWED_HOSTS = ['*']
 
 
 # Application definition
-
 INSTALLED_APPS = [
     'django.contrib.admin',
     'django.contrib.auth',
@@ -78,7 +77,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'betting_app1',
         'USER': 'postgres',
-        'PASSWORD': '',
+        'PASSWORD':'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
     }
