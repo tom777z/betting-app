@@ -1,0 +1,31 @@
+{% extends "betting_app/base.html" %}
+
+{%block title%} Bets per Game {% endblock%}
+
+{% block content %}
+<div class="row">
+    {% for game in games %}
+    <div class="col-md-6 col-lg-4 mb-4">
+    <div class="card text-center">
+            <div class="card-header">
+                {{game.date | date:'d-m-Y H:i' }}</span>
+            </div>
+
+            <div class="card-body" style="background:{% if not game.active %}#f7f7f7{% endif %}">
+                <h5 class="card-title">{{game.home_team.name}} - {{game.away_team.name}}</h5></a>
+                <p class="card-text">{{game.league.name}}</p>
+                <h3>{% if game.home_goals %} {{ game.home_goals }} - {{game.away_goals}} {% endif %}</h3>
+            
+            {% for gb in game.bet_set.all %}
+                    <h5><a href="{% url 'bet' gb.id %}">{{ gb.player}} -> {{gb.home_goals}}: {{gb.away_goals}}</a></h5>
+            {%endfor%}
+        </div>
+            <div class="card-footer text-muted">
+                {{ game.round.name }}
+            </div>
+          </div>
+        </div>
+    {%endfor%}
+</div>
+{% endblock %}
+

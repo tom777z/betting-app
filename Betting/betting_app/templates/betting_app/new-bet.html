@@ -1,0 +1,15 @@
+{% extends "betting_app/base.html" %}
+
+{%block title%} New Bet {% endblock%}
+
+{% block content %}
+    <form class="form" method="POST" enctype="multipart/form-data" >
+        {% csrf_token %} 
+        <div class="form">
+        {{form.as_p}}
+        </div>
+        <input class="btn btn-primary" type="button" value="Go Back" onclick="history.back()">
+        <input class="btn btn-primary" type="submit" value="Submit" />
+    </form>
+</br>
+{% endblock %}

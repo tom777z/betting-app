@@ -1,0 +1,33 @@
+{% extends "betting_app/base.html" %}
+
+{%block title%} All Games {% endblock%}
+
+{% block content %}
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-light">
+            <tr>
+              <th scope="col">Game</th>
+              <th scope="col">League</th>
+              <th scope="col">Date</th>
+              <th scope="col">Goals</th>
+              <th scope="col">Result</th>
+              <th scope="col">Active</th>
+              <th scope="col">Round</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% for game in games %}
+        <tr>
+            <td><a href="{% url 'game' slug=game.slug %}">{{ game.home_team }} - {{ game.away_team }}</a></td>
+            <td>{{ game.league }}</td>
+            <td>{{ game.date | date:'d-m-Y H:i' }}</td>
+            <td>{{ game.home_goals | default_if_none:""  }} : {{ game.away_goals | default_if_none:"" }}</td>
+            <td>{{ game.result | default_if_none:"" }}</td>
+            <td style="background:{% if not game.active %}#f7f7f7{% endif %}">{{ game.active | default_if_none:"" }}</td>
+            <td>{{ game.round }}</td>
+          </tr>       
+        {%endfor%}
+        </tbody>
+    </table>
+{% endblock %}

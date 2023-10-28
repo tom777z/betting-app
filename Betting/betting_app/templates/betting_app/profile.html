@@ -1,0 +1,28 @@
+{% extends "betting_app/base.html" %}
+
+{%block title%} Profile {% endblock%}
+
+{% block content %}
+<div class="row">
+    <div class="col-lg-3 col-md-4 col-sm-4">
+        <div>
+            <h2>{{ player.nickname }}</h2>
+            <div>
+                <i style="color: green">Online</i> 
+            </div>
+            <div>
+                <img src="{{player.image.url}}" width="200px">
+            </div>
+        </br>
+            <div>
+                <h5> First name: {{ player.firstname }} </h5>
+            </div>
+            <div>
+                <h5> Last name: {{ player.lastname }} </h5>
+            </div>
+            <div>
+                <h5> Points: <span style="color: #dc3545"> {{ points | default_if_none:"0"  }}</span></h5>
+            </div>
+        </div>
+    </div>
+{% endblock %}

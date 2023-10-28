@@ -1,0 +1,29 @@
+{% extends "betting_app/base.html" %}
+
+{%block title%} Games {% endblock%}
+
+{% block content %}
+<div class="row">
+    {% for game in games %}
+    <div class="col-md-6 col-lg-4 mb-4">
+        <div class="card text-center">
+            <div class="card-header">
+                {{game.date | date:'d-m-Y H:i' }} <span style="color: #dc3545">({{game.days_left}} days left)</span>
+            </div>
+            <div class="card-body">
+                <a href="{% url 'game' game.slug %}"><h5 class="card-title">{{game.home_team__name}} - {{game.away_team__name}}</h5></a>
+                <p class="card-text">{{game.league__name}}</p>
+                {% if request.user.is_authenticated %}
+                    <a href="{% url 'new-bet' %}?game={{game.id}}" class="btn btn-warning">Bet!</a>
+                {% endif %}
+            </div>
+            <div class="card-footer text-muted">
+                {{game.round__name }}
+            </div>
+          </div>
+        </div>
+    {%endfor%}
+</div>
+  {% endblock %}
+
+

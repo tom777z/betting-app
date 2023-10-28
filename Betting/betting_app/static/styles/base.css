@@ -1,0 +1,12 @@
+.card {
+  margin: 0 auto;
+  width: 95%;
+}
+
+footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  text-align: center;
+}
+

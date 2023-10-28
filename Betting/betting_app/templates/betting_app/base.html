@@ -1,0 +1,85 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %} Betting app {% endblock %}</title>
+    {% load bootstrap5 %}
+    {% bootstrap_css %}
+    {% bootstrap_javascript %}
+    <link rel="stylesheet" href="{% static 'styles/base.css' %}">
+    <link rel="shortcut icon" type="image/png" href="{% static 'img/favicon.ico' %}"/>
+</head>
+<body>
+   {% if request.user.is_authenticated %}
+  <div style="margin: 5px">User: {{ player.nickname }} <img src="{{player.image.url}}" style="width:24px"></div>
+  {% endif %}
+    <nav class="navbar navbar-expand-lg navbar-light bg-light border">
+        <div class="container-fluid">
+          <a class="navbar-brand" href="{% url 'games' %}">Betting app</a>
+          <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+          </button>
+          <div class="collapse navbar-collapse" id="navbarNavDropdown">
+            <ul class="navbar-nav">
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'games' %}">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'games-list' %}">Games</a>
+              </li>
+              {% if request.user.is_authenticated %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'my-bets' %}">My Bets</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'bets' %}">All Bets</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'game-bets' %}">Bets per Game</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'scores' %}">Scores</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'ranking' %}">Ranking</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'profile' %}">Profile</a> 
+              </li>
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+              </li>
+              {% else %}
+              <li class="nav-item">
+                <a class="nav-link" href="{% url 'login' %}">Login</a>
+              </li>
+              {% endif %}
+              {% if request.user.is_authenticated %}
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                  Actions
+                </a>
+                <ul class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                    {% if request.user.is_staff %}
+                      <li><a class="dropdown-item" href="{% url 'new-game' %}">New Game</a></li>
+                      <li><a class="dropdown-item" href="{% url 'new-round' %}">New Round</a></li>
+                   {% endif %}
+                  <li><a class="dropdown-item" href="{% url 'new-bet' %}">New Bet</a></li>
+                </ul>
+              </li>
+              {% endif %}
+            </ul>
+          </div>
+        </div>
+      </nav>
+    </br>
+  <div class="container-fluid">
+    {% block content %} 
+    {% endblock %}
+  </div>
+  {% include 'betting_app/footer.html' %}
+</body>
+</html>
+

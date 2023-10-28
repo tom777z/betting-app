@@ -1,0 +1,35 @@
+{% extends "betting_app/base.html" %}
+{% load render_table from django_tables2 %}
+
+{%block title%} All Bets {% endblock%}
+
+{% block content %}
+
+    <table class="table table-striped table-hover table-bordered">
+        <thead class="table-light">
+            <tr>
+              <th scope="col">Player</th>
+              <th scope="col">Game</th>
+              <th scope="col">League</th>
+              <th scope="col">Date</th>
+              <th scope="col">Goals</th>
+              <th scope="col">Result</th>
+              <th scope="col">Created</th>
+            </tr>
+          </thead>
+          <tbody>
+        {% for bet in bets %}
+        <tr>
+            <td>{{ bet.player.nickname }}</td>
+            <td><a href="{% url 'bet' pk=bet.id %}">{{ bet.game.home_team }} - {{ bet.game.away_team }}</a></td>
+            <td>{{ bet.game.league }}</td>
+            <td>{{ bet.game.date | date:'d-m-Y H:i' }}</td>
+            <td>{{ bet.home_goals }} : {{ bet.away_goals }}</td>
+            <td>{{ bet.result }}</td>
+            <td>{{ bet.created_date | date:'d-m-Y H:i' }}</td>
+          </tr>       
+        {%endfor%}
+        </tbody>
+      </table>
+    
+{% endblock %}

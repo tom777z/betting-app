@@ -1,0 +1,23 @@
+{% extends "betting_app/base.html" %}
+
+{%block title%} Game {% endblock%}
+
+{% block content %}
+<div class="card" style="width: 30rem;">
+    <div class="card-header">
+        {{game.date | date:'d-m-Y H:i' }}  <b><span style="float:right"> GAME </span></b>
+    </div>
+    <div class="card-body" style="background:{% if not game.active %}#f7f7f7{% endif %}">
+      <h5 class="card-title">{{game.home_team}} - {{game.away_team}}</h5>
+      <p class="card-text">{{game.league}} ({{game.league.country}})</p>
+      <input class="btn btn-primary" type="button" value="Go Back" onclick="history.back()">
+      {% if request.user.is_authenticated %}
+        {% if request.user.is_staff %}
+          <a href="{% url 'update-game' pk=game.id %}" class="btn btn-primary">Modify</a>
+          <a href="{% url 'delete-game' pk=game.id %}" class="btn btn-danger">Delete</a>
+        {% endif %}
+      <a href="{% url 'new-bet' %}?game={{game.id}}" class="btn btn-warning">Bet!</a>
+      {% endif %}
+    </div>
+  </div>
+{% endblock %}

@@ -1,0 +1,42 @@
+{% extends "betting_app/base.html" %}
+
+{%block title%} Scores {% endblock%}
+
+{% block content %}
+
+<table class="table table-striped table-hover table-bordered">
+    <thead class="table-light">
+        <tr>
+          <th scope="col">Player</th>
+          <th scope="col">Game</th>
+          <th scope="col">League</th>
+          <th scope="col">Date</th>
+          <th scope="col">Game goals</th>
+          <th scope="col">Bet goals</th>
+          <th scope="col">Game result</th>
+          <th scope="col">Bet result</th>
+          <th scope="col">Bet date</th>
+          <th scope="col">Points</th>
+          <th scope="col">Round</th>
+        </tr>
+      </thead>
+      <tbody>
+    {% for d in data %}
+    <tr>
+        <td> {{ d.player__nickname}}</td>
+        <td><a href="{% url 'game' slug=d.game__slug %}">{{ d.game__home_team__name }} - {{ d.game__away_team__name }}</a></td>
+        <td>{{ d.game__league__name}}</td>
+        <td>{{ d.game__date | date:'d-m-Y H:i' }}</td>
+        <td>{{ d.game__home_goals | default_if_none:""  }} : {{ d.game__away_goals | default_if_none:"" }}</td>
+        <td>{{ d.home_goals | default_if_none:""  }} : {{ d.away_goals | default_if_none:"" }}</td>
+        <td>{{ d.game__result | default_if_none:"" }}</td>
+        <td>{{ d.result | default_if_none:"" }}</td>
+        <td>{{ d.created_date | date:'d-m-Y H:i' }}</td>
+        <td class="text-white" style="background: #dc3545"><h6>{{ d.score | default_if_none:0 }}</h6></td>
+        <td>{{ d.game__round__name }}</td>
+      </tr>       
+    {%endfor%}
+    </tbody>
+</table>
+{% endblock %}
+
