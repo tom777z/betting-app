@@ -1,7 +1,7 @@
 from django.shortcuts import render, redirect, get_object_or_404
 from django.urls import reverse_lazy
 from .models import Game, Bet, Player, Round
-from .forms import GameForm, BetForm, UpdateGameForm
+from .forms import GameForm, BetForm, UpdateGameForm, ProfileUpdateForm
 from django.utils import timezone
 from datetime import datetime
 from django.views.generic import ListView, CreateView
@@ -171,7 +171,6 @@ def new_bet(request):
         initial = {}
         if request.GET:
             initial = request.GET.copy()
-            print(initial)
 
         form = BetForm(initial=initial)
         if request.method == "POST":
@@ -185,7 +184,6 @@ def new_bet(request):
         context = {'form':form}
     return render(request, 'betting_app/new-bet.html', context)
 
-
 def login_user(request):
     return render(request, "registration/login.html")
 
@@ -196,7 +194,7 @@ def logout_user(request):
 
 @login_required
 def user_profile(request):
-
+    
     context = {}
     pcount = Player.objects.count()
     if pcount > 0:   
@@ -210,8 +208,23 @@ def user_profile(request):
 
         #user points
         points = Bet.objects.filter(player=player_id).aggregate(Sum('score'))['score__sum']
-        
-        context = {'player': obj, 'points': points }
+   
+    context['player'] = obj
+    context['points'] = points
+
+    pl = Player.objects.get(id=obj.id)
+    form = ProfileUpdateForm(instance=pl)
+    context = { 'form': form }
+    
+    if request.method == 'POST':
+        form = ProfileUpdateForm(request.POST, request.FILES, instance=pl)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+
+        context = { 'form': form }
+    ####################################################################
+
     return render(request, "betting_app/profile.html", context)
 
 

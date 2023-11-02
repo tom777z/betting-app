@@ -13,7 +13,7 @@
 </head>
 <body>
    {% if request.user.is_authenticated %}
-  <div style="margin: 5px">User: {{ player.nickname }} <img src="{{player.image.url}}" style="width:24px"></div>
+  <div style="margin: 5px">User: {{ player.nickname }} <img class="rounded-circle" src="{{player.image.url}}" style="width:24px"></div>
   {% endif %}
     <nav class="navbar navbar-expand-lg navbar-light bg-light border">
         <div class="container-fluid">

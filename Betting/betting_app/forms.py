@@ -1,9 +1,11 @@
 from django.forms import ModelForm
-from .models import Game, Bet
+from .models import Game, Bet, Player
 from django.core.exceptions import ValidationError
 from django import forms
 from django.utils import timezone
+from django.contrib.auth.decorators import login_required
 
+@login_required
 class GameForm(ModelForm):
     class Meta:
         model = Game
@@ -28,7 +30,8 @@ class GameForm(ModelForm):
         if home_team == away_team:
             raise ValidationError(
                 'Home team and Away team can\'t have the same value')
-    
+        
+  
 class UpdateGameForm(ModelForm):
     class Meta:
         model = Game
@@ -54,6 +57,7 @@ class UpdateGameForm(ModelForm):
 
         return cleaned_data
     
+
 class BetForm(ModelForm):
     class Meta:
         model = Bet
@@ -64,15 +68,16 @@ class BetForm(ModelForm):
         self.fields['game'].queryset = Game.objects.filter(date__gt=timezone.now()).filter(active=True)
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})
-    
-class UpdateBetForm(ModelForm):
+           
+
+class ProfileUpdateForm(ModelForm):
     class Meta:
-        model = Bet
-        fields = 'player', 'game', 'home_goals', 'away_goals'
+        model = Player
+        fields = ['nickname', 'firstname', 'lastname', 'image']
+    
 
     def __init__(self, *args, **kwargs):
-        super(UpdateBetForm, self).__init__(*args, **kwargs)
-        self.fields['game'].queryset = Game.objects.filter(date__gt=timezone.now()).filter(active=True)
-        
+        super(ProfileUpdateForm, self).__init__(*args, **kwargs)
+
         for name, field in self.fields.items():
             field.widget.attrs.update({'class': 'input'})

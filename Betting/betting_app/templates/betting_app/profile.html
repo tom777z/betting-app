@@ -11,18 +11,27 @@
                 <i style="color: green">Online</i> 
             </div>
             <div>
-                <img src="{{player.image.url}}" width="200px">
+                <img class="rounded-circle" src="{{player.image.url}}" width="200px">
             </div>
         </br>
-            <div>
-                <h5> First name: {{ player.firstname | default_if_none:"" }} </h5>
-            </div>
-            <div>
-                <h5> Last name: {{ player.lastname | default_if_none:"" }} </h5>
-            </div>
-            <div>
-                <h5> Points: <span style="color: #dc3545"> {{ points | default_if_none:"0"  }}</span></h5>
-            </div>
+        <div>
+            <h4 style="font-weight:normal"> Points: <span style="color: #dc3545;"> {{ points | default_if_none:"0"  }}</span></h4>
+            <hr>
+        </div>
+        <div>
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                <fieldset class="form-group">
+                    <legend class="border-bottom mb-4">Profile Info</legend>
+                    {{ form.as_p }}
+                </fieldset>
+                <div class="form-group">
+                    <button class="btn btn-outline-info" type="submit">Update</button>
+                </div>
+            </form>
+            <hr>
+        </div>
+
         </div>
     </div>
 {% endblock %}
