@@ -3,8 +3,14 @@
 {%block title%} Profile {% endblock%}
 
 {% block content %}
+
 <div class="row">
     <div class="col-lg-3 col-md-4 col-sm-4">
+        {% if messages %}
+            {% for message in messages %}
+                <div id="msg" class="alert {{ message.tags }} alert-dismissible fade show" role="alert">{{message}}</div>
+            {% endfor %}
+        {% endif %}
         <div>
             <h2>{{ player.nickname }}</h2>
             <div>
@@ -22,11 +28,12 @@
             <form method="POST" enctype="multipart/form-data">
                 {% csrf_token %}
                 <fieldset class="form-group">
-                    <legend class="border-bottom mb-4">Profile Info</legend>
+                    <legend>Profile Info</legend>
+                <hr>
                     {{ form.as_p }}
                 </fieldset>
                 <div class="form-group">
-                    <button class="btn btn-outline-info" type="submit">Update</button>
+                    <button class="btn btn-primary" type="submit">Update</button>
                 </div>
             </form>
             <hr>
@@ -34,4 +41,11 @@
 
         </div>
     </div>
+
+<script>
+    function fade_out() {
+            $(".alert").fadeOut();
+        }; 
+    setTimeout(fade_out, 3000);
+</script>
 {% endblock %}

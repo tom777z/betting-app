@@ -12,6 +12,8 @@ https://docs.djangoproject.com/en/4.2/ref/settings/
 
 from pathlib import Path
 import os
+from django.contrib.messages import constants as messages
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,7 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'aILsj21hqwewvaR38w@mh3ptbss&h)5#eq5h76gamu+-oj_s9t4cc7'
+SECRET_KEY = 'aILsj21hqLAKwewvaR38w@mh3ptbss&h)5#eqYCH#5h76gamu+-oj_s9t4cc7'
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
@@ -117,8 +119,6 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
-#BASE_DIR  -> /home/tomasz/Dokumenty/My Project/Betting
-
 STATIC_ROOT = BASE_DIR / 'staticfiles' #The absolute path to the directory where collectstatic will collect static files for deployment.
 STATIC_URL = 'static/' #Example: "/static/" or "http://static.example.com/" URL which will serve those static files.
 STATICFILES_DIRS = [ BASE_DIR / 'betting_app/static' ]
@@ -134,3 +134,11 @@ LOGIN_REDIRECT_URL = '/'
 
 MEDIA_ROOT = BASE_DIR / 'media' #s the path on the filesystem to the directory containing your static media.
 MEDIA_URL = 'media/' # is the URL that makes the static media accessible over HTTP
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'alert-info',
+    messages.INFO: 'alert-info',
+    messages.SUCCESS: 'alert-success',
+    messages.WARNING: 'alert-warning',
+    messages.ERROR: 'alert-danger',
+}

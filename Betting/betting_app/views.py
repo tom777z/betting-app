@@ -5,13 +5,14 @@ from .forms import GameForm, BetForm, UpdateGameForm, ProfileUpdateForm
 from django.utils import timezone
 from datetime import datetime
 from django.views.generic import ListView, CreateView
-from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.auth import logout
 from django.db.models import Sum
 from django.contrib.auth.decorators import login_required
 from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from operator import itemgetter
+from django.contrib import messages
 
 def calculate_score(b_hg, b_ag, b_r, g_hg, g_ag, g_r):
     points = 0
@@ -86,7 +87,7 @@ def game(request, slug=None):
     return render(request, 'betting_app/game.html', {'game': game})
 
 class bets(LoginRequiredMixin,ListView):
-    model = Game
+    model = Bet
     context_object_name = 'bets'
     template_name = 'betting_app/bets.html'
     bets = Bet.objects.all().order_by('-created_date')
@@ -135,9 +136,10 @@ def update_game(request,pk):
     form = UpdateGameForm(instance=game)
 
     if request.method == "POST":
-        form = UpdateGameForm(request.POST, request.FILES, instance=game)
+        form = UpdateGameForm(request.POST, instance=game)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.INFO, 'Game has been updated')
             return redirect('games')
         
     context = {'form':form}
@@ -179,6 +181,7 @@ def new_bet(request):
                 bet = form.save(commit=False)
                 bet.player = obj
                 bet.save()
+                messages.add_message(request, messages.WARNING, 'Bet has been created!')
                 return redirect('games')
         
         context = {'form':form}
@@ -211,20 +214,19 @@ def user_profile(request):
    
     context['player'] = obj
     context['points'] = points
-
+    
     pl = Player.objects.get(id=obj.id)
     form = ProfileUpdateForm(instance=pl)
-    context = { 'form': form }
-    
+    context['form'] = form
     if request.method == 'POST':
         form = ProfileUpdateForm(request.POST, request.FILES, instance=pl)
         if form.is_valid():
             form.save()
+            messages.add_message(request, messages.INFO, 'Your profile has been updated')
             return redirect('profile')
 
-        context = { 'form': form }
-    ####################################################################
-
+        context['form'] = form
+        print(context)
     return render(request, "betting_app/profile.html", context)
 
 
