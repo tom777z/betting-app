@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'betting_app.apps.BettingAppConfig',
     'bootstrap5',
     'django_extensions',
+    'django.contrib.humanize'
 ]
 
 MIDDLEWARE = [

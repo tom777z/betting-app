@@ -13,6 +13,8 @@ from django.db.models import Sum
 from django.db.models.functions import Coalesce
 from operator import itemgetter
 from django.contrib import messages
+import csv
+from django.http import HttpResponse
 
 def calculate_score(b_hg, b_ag, b_r, g_hg, g_ag, g_r):
     points = 0
@@ -37,11 +39,6 @@ class indexView(ListView):
         queryset = Game.objects.values("id", "slug", "date", "league__name", 
                             "home_team__id", "home_team__name", "away_team__name", "round__name").filter(date__gt=timezone.now()).filter(active=True).order_by("date")
 
-        for game in queryset:
-            now = datetime.now(timezone.utc)
-            dt = game['date']- now
-            game['days_left'] = dt.days
-
         pcount = Player.objects.count()
      
         if pcount > 0:
@@ -54,12 +51,7 @@ class indexView(ListView):
                 if player_id is not None:
                     queryset = Game.objects.filter(date__gt=timezone.now()).filter(active=True).order_by("date").values("id", "slug", "date", "league__name", 
                                 "home_team__id", "home_team__name", "away_team__name", "round__name").exclude(id__in=Bet.objects.filter(player=player_id).values_list('game_id',flat=True))
-        
-                    for game in queryset:
-                        now = datetime.now(timezone.utc)
-                        dt = game['date']- now
-                        game['days_left'] = dt.days
-        
+                
         return queryset
 
 class gameBetsView(LoginRequiredMixin,ListView):
@@ -293,3 +285,17 @@ class newRound(CreateView, LoginRequiredMixin):
     fields = ['name']
     success_url = reverse_lazy('games-list')
     template_name = "betting_app/new-round.html"
+
+def csv_export(request):
+
+    data = Bet.objects.select_related("game").values("game__id", "game__slug","id", "player__nickname", "game", "game__home_team__name", "game__away_team__name", "game__league__name", "game__date", "game__home_goals", "game__away_goals", 
+                                                     "home_goals", "away_goals", "game__result", "result", "created_date", "score", "game__round__name").order_by('game__round__name')
+
+    response = HttpResponse(content_type='text/csv')
+    response['Content-Disposition'] = 'attachment; filename="data.csv"'
+
+    writer = csv.writer(response)
+    writer.writerow(['Player', 'Home team', 'Away team', 'League', 'Date', 'Game goals (home)', 'Game goals (away)', 'Bet goals (home)', 'Bet goals (away)', 'Game result' ,'Bet result' ,'Bet date', 'Points', 'Round'])
+    for i in data:
+        writer.writerow([i['player__nickname'], i['game__home_team__name'], i['game__away_team__name'], i['game__league__name'], i['game__date'],i['game__home_goals'],i['game__away_goals'],i['home_goals'],i['away_goals'],i['game__result'],i['result'], i['created_date'],i['score'],i['game__round__name']])
+    return response

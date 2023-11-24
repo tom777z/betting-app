@@ -10,7 +10,7 @@
     <div class="card-body">
       <h5 class="card-title">{{bet.game.home_team}} - {{ bet.game.away_team}}</h5>
       <p class="card-text">Result: <b>{{bet.home_goals}} : {{bet.away_goals}} ({{bet.result}})</b></p>
-      <p class="card-text">Created: {{bet.created_date | date:'d-m-Y H:i'}} by {{bet.player}}</p>
+      <p class="card-text">Created: {{bet.created_date | date:'d-m-Y H:i'}} by <img src="{{bet.player.image.url}}" style="width:24px"> {{bet.player}}</p>
       <input class="btn btn-primary" type="button" value="Go Back" onclick="history.back()">
     </div>
   </div>

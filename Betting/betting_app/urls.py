@@ -17,6 +17,7 @@ urlpatterns = [
     path('game/<slug:slug>/', views.game, name='game'),
     path('bet/<int:pk>/', views.bet, name='bet'),
     path('scores/', views.scores.as_view(), name="scores"),
+    path('csv-export/', views.csv_export, name="csv-export"),
     path('ranking/', views.ranking, name="ranking"),
     path('new-round', views.newRound.as_view(), name="new-round"),
     path('login/', views.login_user, name="login"),

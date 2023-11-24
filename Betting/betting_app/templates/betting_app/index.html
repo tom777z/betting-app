@@ -1,5 +1,7 @@
 {% extends "betting_app/base.html" %}
 
+{% load humanize %}
+
 {%block title%} Games {% endblock%}
 
 {% block content %}
@@ -11,9 +13,9 @@
 <div class="row">
     {% for game in games %}
     <div class="col-md-6 col-lg-4 mb-4">
-        <div class="card text-center">
+        <div class="card text-center shake">
             <div class="card-header">
-                {{game.date | date:'d-m-Y H:i' }} <span style="color: #dc3545">({{game.days_left}} days left)</span>
+                {{game.date | date:'d-m-Y H:i' }} <span style="color: #dc3545">({{game.date | naturaltime }})</span>
             </div>
             <div class="card-body">
                 <a href="{% url 'game' game.slug %}"><h5 class="card-title">{{game.home_team__name}} - {{game.away_team__name}}</h5></a>

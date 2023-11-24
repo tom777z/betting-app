@@ -81,7 +81,7 @@ class Player(models.Model):
     nickname = models.CharField(max_length=255)
     firstname = models.CharField(max_length=255, blank=True, null=True)
     lastname = models.CharField(max_length=255, blank=True, null=True)
-    image = models.ImageField(null=True, blank=True, upload_to='profiles/', default="profiles/default.png")
+    image = models.ImageField(null=True, upload_to='profiles/', default="profiles/default.png")
     
     def __str__(self):
         return self.nickname

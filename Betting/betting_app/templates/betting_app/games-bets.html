@@ -17,7 +17,7 @@
                 <h3>{% if game.home_goals %} {{ game.home_goals }} - {{game.away_goals}} {% endif %}</h3>
             
             {% for gb in game.bet_set.all %}
-                    <h5><a href="{% url 'bet' gb.id %}">{{ gb.player}} -> {{gb.home_goals}}: {{gb.away_goals}}</a></h5>
+                <h5><img src="{{gb.player.image.url}}" style="width: 24px" /> <a href="{% url 'bet' gb.id %}">{{ gb.player}} -> {{gb.home_goals}}: {{gb.away_goals}}</a></h5>
             {%endfor%}
         </div>
             <div class="card-footer text-muted">
