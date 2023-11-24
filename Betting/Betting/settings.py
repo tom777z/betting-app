@@ -22,12 +22,16 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
+<<<<<<< Updated upstream
 SECRET_KEY = 'aILsj21hqLAKwewvaR38w@mh3ptbss&h)5#eqYCH#5h76gamu+-oj_s9t4cc7'
+=======
+SECRET_KEY = '92KSxmmz#)!*@gy!9&ahcaz&9+mdm*iqks#eq5h76gamu+-oj_s9t4cc7'
+>>>>>>> Stashed changes
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = ['t0m.pythonanywhere.com']
 
 
 # Application definition
@@ -77,12 +81,17 @@ WSGI_APPLICATION = 'Betting.wsgi.application'
 
 DATABASES = {
     'default': {
+<<<<<<< Updated upstream
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': 'betting_app1',
         'USER': 'postgres',
         'PASSWORD':'postgres',
         'HOST': 'localhost',
         'PORT': '5432',
+=======
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+>>>>>>> Stashed changes
     }
 }
 
@@ -120,7 +129,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+<<<<<<< Updated upstream
 STATIC_ROOT = BASE_DIR / 'staticfiles' #The absolute path to the directory where collectstatic will collect static files for deployment.
+=======
+#STATIC_ROOT = 'home/t0m/betting-app/Betting/staticfiles' #The absolute path to the directory where collectstatic will collect static files for deployment.
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+>>>>>>> Stashed changes
 STATIC_URL = 'static/' #Example: "/static/" or "http://static.example.com/" URL which will serve those static files.
 STATICFILES_DIRS = [ BASE_DIR / 'betting_app/static' ]
 #STATICFILES_DIRS is used to include additional directories for collectstatic to look for. For example, by default, Django doesn't recognize /myProject/static/. So you can include it yourself.
